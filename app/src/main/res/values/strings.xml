@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SelfCashier</string>
+    <string name="IP_REST_API">http://192.168.43.174:8000/api</string>
+    <string name="URL_IMAGE">http://192.168.43.174:8000/</string>
+
+</resources>

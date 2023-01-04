@@ -1,0 +1,1 @@
+Aplikasi Swalayan Pasipa Merupakan Aplikasi yang mempermudah dalam pembelian produk 

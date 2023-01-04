@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user.NotifPembayaran"
+    android:background="#CCC"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_loading"
+                android:layout_width="350dp"
+                app:lottie_rawRes="@raw/success"
+                app:lottie_autoPlay="true"
+                app:lottie_speed="1.25"
+                app:lottie_loop="false"
+                android:layout_height="300dp">
+            </com.airbnb.lottie.LottieAnimationView>
+            <TextView
+                android:id="@+id/ket_loading2"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Pembayaran Success"
+                android:textSize="17sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/ket_loading"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Terima kasih telah belanja di toko kami"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
