@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,10 @@ class ProsesPembaayran:AppCompatActivity() {
         btn_selesai=findViewById(R.id.btn_selesai)
         imagebarcode=findViewById(R.id.imagebarcode)
 
-        val word="Hello World"
+        val intent= intent
+        val nomor_transaksi=intent.getStringExtra("nomor_transaksi").toString()
+        Toast.makeText(this,nomor_transaksi,Toast.LENGTH_LONG).show()
+        val word=nomor_transaksi
         val manager=getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val displaly=manager.defaultDisplay
         val point= Point()

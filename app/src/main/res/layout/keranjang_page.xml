@@ -248,7 +248,7 @@
                tools:ignore="HardcodedText" />
            <TextView
                android:id="@+id/btn_proses_pembayaran"
-               android:text="BAYAR"
+               android:text="PROSES"
                android:padding="10dp"
                android:background="#574DE8"
                android:textColor="@color/white"

@@ -90,7 +90,7 @@ class KeranjangPage:AppCompatActivity() {
         API_GET_DATA_KERANJANG_TODAY=IP_REST_API+"/user/data_transaksi_user_today"
         API_CEK_BARANG_USER=IP_REST_API+"/user/cek_barang_user/"
         API_ADD_KERANJANG_USER=IP_REST_API+"/user/add_keranjang_user"
-        API_UPDATE_KERANJANG_USER=IP_REST_API+"/user/update_keranjang_user"
+        API_UPDATE_KERANJANG_USER= "$IP_REST_API/user/update_keranjang_user"
 
         setUpPermisionCamera()
         initComponent()
@@ -202,20 +202,23 @@ class KeranjangPage:AppCompatActivity() {
         val c=Calendar.getInstance()
         val year=c.get(Calendar.YEAR)
         val month=c.get(Calendar.MONTH)
+
         if(!sharedPreferences.contains("status_keranjang")){
             openScanner()
         }
+
 
         nomorkeranjang.text= "$generate$year${month+1}"
 
         //load data keranjang user
 
         btnScanner.setOnClickListener {
-            scannerView.visibility=View.VISIBLE
-            linearLayout.visibility=View.GONE
-            linear_bottom.visibility=View.GONE
-            openScanner()
-        }
+          scannerView.visibility=View.VISIBLE
+          linearLayout.visibility=View.GONE
+          linear_bottom.visibility=View.GONE
+
+          openScanner()
+          }
 
         btn_proses_pembayaran.setOnClickListener {
             requestUpdateKeranjang()
@@ -236,9 +239,11 @@ class KeranjangPage:AppCompatActivity() {
         dialog.setContentView(R.layout.custom_dialog)
         val textView=dialog.findViewById<TextView>(R.id.ket_loading)
         textView.text="Sedang Memproses..."
-        dialog.show()
+        dialog.show();
+
 
         val jsonArray=JSONArray()
+        var totaljumlah=0;
         (0 until list.size).forEach{
             val jsonObject=JSONObject()
             jsonObject.put("jumlah",list[it].jumlah.toString())
@@ -248,6 +253,7 @@ class KeranjangPage:AppCompatActivity() {
             jsonObject.put("harga",list[it].harga)
             jsonObject.put("tgl",list[it].tgl)
             jsonObject.put("id_pengguna",list[it].id_pengguna)
+            totaljumlah+=list[it].jumlah
             jsonArray.put(jsonObject)
         }
         val nomor_transaksi= if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -255,23 +261,24 @@ class KeranjangPage:AppCompatActivity() {
         } else {
             TODO("VERSION.SDK_INT < N")
         }
-        val map=mapOf("data" to jsonArray.toString(),
-            "total" to total_keseluruhan.toString(),
-            "nomor_transaksi" to nomor_transaksi.uppercase())
+        val map=mapOf("data" to jsonArray.toString(),"status" to "0",
+            "total" to total_keseluruhan.toString(),"nomor_keranjang" to nomorkeranjang.text.toString(),
+            "nomor_transaksi" to nomor_transaksi.uppercase(),"id_pengguna" to id_pengguna.toString())
+
         RequestApi().PostingText(this,map,API_UPDATE_KERANJANG_USER,object:CallbackRes{
             @RequiresApi(Build.VERSION_CODES.P)
             override fun oncallbackSuccess(result: String) {
-                val res=JSONObject(result).getInt("count")
-                Handler.createAsync(Looper.getMainLooper()).postDelayed({
-                    if(res>0){
-                        val intent=Intent(applicationContext, ProsesPembaayran::class.java)
-                        intent.putExtra("nomor_transaksi",nomor_transaksi)
-                        startActivity(intent)
-                        finish()
-                    }else{
-                        Toast.makeText(applicationContext,"Update keranjang gagal",Toast.LENGTH_LONG).show()
-                    }
-                },3000)
+                val json=JSONObject(result)
+
+                val row=json.getInt("count")
+
+                if(row ==0){
+                    Toast.makeText(applicationContext,"Ada Kesalahan Saat Memproses... ",Toast.LENGTH_SHORT).show()
+                    return
+                }
+                val intent=Intent(applicationContext,ProsesPembaayran::class.java)
+                intent.putExtra("nomor_transaksi",nomor_transaksi.uppercase())
+                startActivity(intent)
             }
 
             override fun oncallbackError(volleyError: VolleyError) {
@@ -398,7 +405,6 @@ class KeranjangPage:AppCompatActivity() {
             override fun oncallbackSuccess(result: String) {
                 val res=JSONObject(result).getInt("count")
                 if(res>0){
-                    Toast.makeText(applicationContext,"produk berhasil ditambahkan kelist keranjang",Toast.LENGTH_LONG).show()
                     val edit=sharedPreferences.edit()
                     edit.putInt("status_keranjang",1)
                     edit.apply()
@@ -478,14 +484,11 @@ class KeranjangPage:AppCompatActivity() {
             override fun oncallbackSuccess(result: String) {
                 val res=JSONObject(result).getString("data")
                 val array=JSONArray(res.toString())
-
-
                 if(array.length()>0){
                     val jsonObject=array.getJSONObject(0)
                     addprodukKeranjang(jsonObject)
                 }
             }
-
             override fun oncallbackError(volleyError: VolleyError) {
                 var errorMsg = ""
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
