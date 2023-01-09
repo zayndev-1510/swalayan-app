@@ -51,7 +51,7 @@
                     android:id="@+id/row_total_transaksi_kasir"
                     android:layout_marginTop="-25dp"
                     android:textColor="@color/white"
-                    android:text="Rp.300.000"
+                    android:text="Rp.0"
                     android:textStyle="bold"
                     android:padding="10dp"
                     android:textAlignment="center"

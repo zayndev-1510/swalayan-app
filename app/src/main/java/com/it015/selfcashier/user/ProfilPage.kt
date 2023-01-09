@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.*
+import com.it015.selfcashier.LoginPage
 import com.it015.selfcashier.MainActivity
 import com.it015.selfcashier.R
 import com.it015.selfcashier.api.CallbackRes
@@ -28,6 +29,7 @@ import java.net.SocketTimeoutException
 class ProfilPage : AppCompatActivity() {
 
     private lateinit var btn_back:LinearLayout
+    private lateinit var btn_keluar:TextView
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var profilname: TextView
     private lateinit var profilemail: TextView
@@ -60,12 +62,19 @@ class ProfilPage : AppCompatActivity() {
         profilalamat=findViewById(R.id.profil_alamat)
         profiluser=findViewById(R.id.profil_username)
         profilnomor=findViewById(R.id.profil_nomor_hp)
-
-
+        btn_keluar=findViewById(R.id.btn_keluar)
         requestProfil()
 
         btn_back.setOnClickListener{
             startActivity(Intent(this, DashboardPage::class.java))
+            finish()
+        }
+
+        btn_keluar.setOnClickListener{
+            val editor=sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+            startActivity(Intent(this,LoginPage::class.java))
             finish()
         }
     }

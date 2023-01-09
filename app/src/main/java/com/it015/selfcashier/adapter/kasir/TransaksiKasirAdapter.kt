@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.it015.selfcashier.R
 import com.it015.selfcashier.holder.kasir.DetailTransaksiKasirHolder
 import com.it015.selfcashier.model.DetailTransaksiModel
+import com.it015.selfcashier.model.kasir.DetailTransaksiModelKasir
 import com.it015.selfcashier.model.kasir.TransaksiKasirModel
 import java.text.DecimalFormat
 
-class TransaksiKasirAdapter (var list: MutableList<DetailTransaksiModel>):
+class TransaksiKasirAdapter (var list: MutableList<DetailTransaksiModelKasir>):
     RecyclerView.Adapter<DetailTransaksiKasirHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailTransaksiKasirHolder {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.result_detail_transaksi,parent,false)
