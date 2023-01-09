@@ -13,7 +13,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import com.android.volley.*
+import com.it015.selfcashier.LoginPage
 import com.it015.selfcashier.MainActivity
 import com.it015.selfcashier.R
 import com.it015.selfcashier.api.CallbackRes
@@ -40,6 +42,7 @@ class ProfilPageKasir:AppCompatActivity() {
     private lateinit var profilimage:ImageView
     private lateinit var profiltgl_lahir:TextView
     private lateinit var profilpendidikan:TextView
+    private lateinit var btn_keluar:TextView
 
     var id_pengguna=0
     private var IP_ADRESS=""
@@ -70,9 +73,16 @@ class ProfilPageKasir:AppCompatActivity() {
         profilpendidikan=findViewById(R.id.pendidikan_sekolah)
         profiltgl_lahir=findViewById(R.id.tgl_lahir)
 
-
+        btn_keluar=findViewById(R.id.btn_keluar)
         requestProfil()
 
+        btn_keluar.setOnClickListener{
+            val edit=sharedPreferences.edit()
+            edit.clear()
+            edit.apply()
+            startActivity(Intent(this,LoginPage::class.java))
+            finish()
+        }
         btn_back.setOnClickListener{
             startActivity(Intent(this, DashboardKasir::class.java))
             finish()

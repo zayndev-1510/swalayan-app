@@ -244,6 +244,7 @@
                    <LinearLayout
                        android:orientation="horizontal"
                        android:weightSum="2"
+                       android:padding="10dp"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content">
                        <TextView
