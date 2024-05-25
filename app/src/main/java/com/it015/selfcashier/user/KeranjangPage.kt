@@ -528,8 +528,7 @@ class KeranjangPage:AppCompatActivity() {
 
         })
     }
-
-
+    
     @SuppressLint("SetTextI18n")
     private fun addDataToList(jsonObject: JSONObject, jsonData: JSONObject) {
 
